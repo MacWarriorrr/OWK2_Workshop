@@ -9,38 +9,135 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VakkenRouteImport } from './routes/vakken'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as OverRouteImport } from './routes/over'
+import { Route as BronnenRouteImport } from './routes/bronnen'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ActiviteitVakRouteImport } from './routes/activiteit.$vak'
 
+const VakkenRoute = VakkenRouteImport.update({
+  id: '/vakken',
+  path: '/vakken',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OverRoute = OverRouteImport.update({
+  id: '/over',
+  path: '/over',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BronnenRoute = BronnenRouteImport.update({
+  id: '/bronnen',
+  path: '/bronnen',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ActiviteitVakRoute = ActiviteitVakRouteImport.update({
+  id: '/activiteit/$vak',
+  path: '/activiteit/$vak',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/bronnen': typeof BronnenRoute
+  '/over': typeof OverRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/vakken': typeof VakkenRoute
+  '/activiteit/$vak': typeof ActiviteitVakRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/bronnen': typeof BronnenRoute
+  '/over': typeof OverRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/vakken': typeof VakkenRoute
+  '/activiteit/$vak': typeof ActiviteitVakRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/bronnen': typeof BronnenRoute
+  '/over': typeof OverRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/vakken': typeof VakkenRoute
+  '/activiteit/$vak': typeof ActiviteitVakRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/bronnen'
+    | '/over'
+    | '/sitemap.xml'
+    | '/vakken'
+    | '/activiteit/$vak'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/bronnen'
+    | '/over'
+    | '/sitemap.xml'
+    | '/vakken'
+    | '/activiteit/$vak'
+  id:
+    | '__root__'
+    | '/'
+    | '/bronnen'
+    | '/over'
+    | '/sitemap.xml'
+    | '/vakken'
+    | '/activiteit/$vak'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BronnenRoute: typeof BronnenRoute
+  OverRoute: typeof OverRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  VakkenRoute: typeof VakkenRoute
+  ActiviteitVakRoute: typeof ActiviteitVakRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/vakken': {
+      id: '/vakken'
+      path: '/vakken'
+      fullPath: '/vakken'
+      preLoaderRoute: typeof VakkenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/over': {
+      id: '/over'
+      path: '/over'
+      fullPath: '/over'
+      preLoaderRoute: typeof OverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bronnen': {
+      id: '/bronnen'
+      path: '/bronnen'
+      fullPath: '/bronnen'
+      preLoaderRoute: typeof BronnenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +145,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/activiteit/$vak': {
+      id: '/activiteit/$vak'
+      path: '/activiteit/$vak'
+      fullPath: '/activiteit/$vak'
+      preLoaderRoute: typeof ActiviteitVakRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BronnenRoute: BronnenRoute,
+  OverRoute: OverRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  VakkenRoute: VakkenRoute,
+  ActiviteitVakRoute: ActiviteitVakRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
