@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Copy, Check } from "lucide-react";
 import {
   Sheet,
@@ -26,8 +26,7 @@ export function SummaryPanel({ open, onOpenChange, cards, positions, subject }: 
   const [text, setText] = useState(initial);
   const [copied, setCopied] = useState(false);
 
-  // refresh when reopening
-  useMemo(() => {
+  useEffect(() => {
     if (open) setText(initial);
   }, [open, initial]);
 
