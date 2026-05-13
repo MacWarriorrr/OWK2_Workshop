@@ -79,6 +79,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "Verken welke vorm van differentiatie past bij jouw vak. Digitale verdieping bij een workshop over convergente en divergente differentiatie.",
       },
+      { property: "og:title", content: "Differentiatie en vakkenmerken" },
+      { name: "twitter:title", content: "Differentiatie en vakkenmerken" },
+      { name: "description", content: "Interactive web app for exploring subject-specific differentiation strategies." },
+      { property: "og:description", content: "Interactive web app for exploring subject-specific differentiation strategies." },
+      { name: "twitter:description", content: "Interactive web app for exploring subject-specific differentiation strategies." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ab32c8a4-5a9a-47e2-99b4-5560bc98604b/id-preview-4e736c91--203c6484-2c48-437b-8778-2ede5df6a5e4.lovable.app-1778662289315.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ab32c8a4-5a9a-47e2-99b4-5560bc98604b/id-preview-4e736c91--203c6484-2c48-437b-8778-2ede5df6a5e4.lovable.app-1778662289315.png" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:type", content: "website" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
