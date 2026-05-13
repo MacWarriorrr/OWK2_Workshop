@@ -45,7 +45,7 @@ export const Route = createFileRoute("/activiteit/$vak")({
 
 function ActiviteitPage() {
   const { subject } = Route.useLoaderData();
-  const cards: CardData[] = cardsBySubject[subject.id];
+  const cards: CardData[] = cardsBySubject[subject.id as keyof typeof cardsBySubject];
   const [positions, setPositions] = useState<Record<string, PlacedCard>>({});
   const [infoCard, setInfoCard] = useState<CardData | null>(null);
   const [reflectionOpen, setReflectionOpen] = useState(false);
