@@ -7,7 +7,7 @@ export const getRouter = () => {
 
   const router = createRouter({
     routeTree,
-    basepath: '/owk2_workshop',
+    basepath: '/OWK2_Workshop',
     context: { queryClient },
     scrollRestoration: true,
     defaultPreloadStaleTime: 0,
