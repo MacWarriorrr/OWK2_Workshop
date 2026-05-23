@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { getSubmissions, createSubmission } from "../data/submissions";
+import { getSubmissions, createSubmission, type Submission } from "../data/submissions";
 import { Button } from "../components/ui/button";
 import {
   Card,
@@ -39,12 +39,11 @@ const formSchema = z.object({
     message: "Beschrijving moet minimaal 10 karakters lang zijn.",
   }),
   image: z
-    .any()
-    .refine((file) => file instanceof File, "Een afbeelding is verplicht.")
-    .refine((file) => file?.size <= 5000000, "Maximale bestandsgrootte is 5MB.")
+    .instanceof(File, { message: "Een afbeelding is verplicht." })
+    .refine((file) => file.size <= 5000000, "Maximale bestandsgrootte is 5MB.")
     .refine(
       (file) =>
-        ["image/jpeg", "image/png", "image/webp"].includes(file?.type),
+        ["image/jpeg", "image/png", "image/webp"].includes(file.type),
       "Alleen .jpg, .png en .webp formaten zijn toegestaan."
     ),
 });
@@ -58,7 +57,7 @@ function UitwerkingenPage() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       description: "",
-      image: undefined,
+      image: undefined as unknown as File,
     },
   });
 
@@ -180,7 +179,7 @@ function UitwerkingenPage() {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {submissions.map((sub) => (
+                {submissions.map((sub: Submission) => (
                   <Card key={sub.id} className="overflow-hidden group hover:shadow-md transition-all duration-300 border-border/50 bg-card">
                     <div className="aspect-[4/3] overflow-hidden bg-muted relative">
                       <img

@@ -1,4 +1,5 @@
 import { createServerFn } from '@tanstack/react-start';
+import { getEvent } from 'vinxi/http'; // Belangrijk voor het ophalen van de Cloudflare context
 
 export type Submission = {
   id: string;
@@ -7,37 +8,42 @@ export type Submission = {
   created_at: string;
 };
 
-// Global augmentation for Cloudflare Env
-declare global {
-  namespace NodeJS {
-    interface ProcessEnv {
-      WORKSHOP_DB: D1Database;
-      WORKSHOP_IMAGES: R2Bucket;
+// Helper om bindings op te halen, onafhankelijk van de actieve omgeving (dev of prod)
+function getPlatformEnv() {
+  try {
+    // 1. Probeer de Cloudflare Pages productietext te lezen via Vinxi/H3
+    const event = getEvent();
+    if (event?.context?.cloudflare?.env) {
+      return event.context.cloudflare.env;
     }
+  } catch (e) {
+    // Slik de fout build-time / lokaal desgewenst in
   }
+
+  // 2. Fallback naar globalThis (voor specifieke lokale emulators)
+  if ((globalThis as any).WORKSHOP_DB) {
+    return globalThis as any;
+  }
+
+  // 3. Fallback naar process.env (voor standaard Vite/Node dev)
+  return process.env;
 }
 
 export const getSubmissions = createServerFn({ method: 'GET' })
   .handler(async () => {
-    // In dev @cloudflare/vite-plugin or in prod global bindings might be accessible via process.env
-    // TanStack Start server functions can also access H3 event, but we'll try process.env first.
-    let db = process.env.WORKSHOP_DB;
-
-    // Fallback for some Cloudflare environments where bindings are attached to globalThis
-    if (!db) {
-      db = (globalThis as any).WORKSHOP_DB;
-    }
+    const env = getPlatformEnv();
+    const db = env?.WORKSHOP_DB;
 
     if (!db) {
-      console.warn("WORKSHOP_DB not found in process.env or globalThis. Returning empty array.");
+      console.warn("WORKSHOP_DB niet gevonden. Controleer de bindings.");
       return [];
     }
 
     try {
-      const { results } = await db.prepare("SELECT * FROM submissions ORDER BY created_at DESC").all<Submission>();
+      const { results } = (await db.prepare("SELECT * FROM submissions ORDER BY created_at DESC").all()) as { results: Submission[] };
       return results || [];
     } catch (e) {
-      console.error("Failed to fetch submissions:", e);
+      console.error("Fout bij ophalen submissions:", e);
       return [];
     }
   });
@@ -49,42 +55,33 @@ export const createSubmission = createServerFn({ method: 'POST' })
     const file = data.get('image') as File | null;
 
     if (!description || !file) {
-      throw new Error("Missing description or image");
+      throw new Error("Beschrijving of afbeelding ontbreekt");
     }
 
-    let db = process.env.WORKSHOP_DB;
-    let r2 = process.env.WORKSHOP_IMAGES;
+    const env = getPlatformEnv();
+    const db = env?.WORKSHOP_DB;
+    const r2 = env?.WORKSHOP_IMAGES;
 
     if (!db || !r2) {
-      db = db || (globalThis as any).WORKSHOP_DB;
-      r2 = r2 || (globalThis as any).WORKSHOP_IMAGES;
+      throw new Error("Cloudflare bindings niet beschikbaar in deze omgeving.");
     }
 
-    if (!db || !r2) {
-      throw new Error("Cloudflare bindings not available.");
-    }
-
-    // Generate unique ID
+    // Unieke ID en bestandsnaam genereren
     const id = crypto.randomUUID();
     const fileExt = file.name.split('.').pop() || 'jpg';
     const filename = `${id}.${fileExt}`;
 
-    // Convert File to ArrayBuffer for R2
+    // Bestand converteren naar ArrayBuffer voor R2 opslag
     const arrayBuffer = await file.arrayBuffer();
 
-    // Upload to R2
+    // Upload naar R2
     await r2.put(filename, arrayBuffer, {
       httpMetadata: { contentType: file.type }
     });
 
-    // We assume the bucket is configured for public access or a worker routes to it.
-    // For now, we will just store the filename or a constructed URL.
-    // Assuming the R2 bucket is public via a domain (e.g. images.yourdomain.com),
-    // or we might need to serve it from a route. 
-    // Let's create an API route to serve R2 images, or store the relative path:
     const imageUrl = `/api/images/${filename}`;
 
-    // Insert into D1
+    // Opslaan in D1 SQL database
     await db.prepare(
       "INSERT INTO submissions (id, description, image_url) VALUES (?, ?, ?)"
     ).bind(id, description, imageUrl).run();
