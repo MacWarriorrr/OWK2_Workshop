@@ -88,3 +88,33 @@ export const createSubmission = createServerFn({ method: 'POST' })
 
     return { success: true, id };
   });
+
+export const deleteSubmission = createServerFn({ method: 'POST' })
+  .validator((id: unknown) => {
+    if (typeof id !== 'string') throw new Error('Invalid ID');
+    return id;
+  })
+  .handler(async ({ data: id }) => {
+    const env = getPlatformEnv();
+    const db = env?.WORKSHOP_DB;
+    const r2 = env?.WORKSHOP_IMAGES;
+
+    if (!db || !r2) {
+      throw new Error("Cloudflare bindings niet beschikbaar in deze omgeving.");
+    }
+
+    // Get submission to find image filename
+    const { results } = await db.prepare("SELECT image_url FROM submissions WHERE id = ?").bind(id).all();
+    if (results && results.length > 0) {
+      const imageUrl = (results[0] as any).image_url as string;
+      const filename = imageUrl.split('/').pop();
+      if (filename) {
+        await r2.delete(filename);
+      }
+    }
+
+    // Delete from DB
+    await db.prepare("DELETE FROM submissions WHERE id = ?").bind(id).run();
+
+    return { success: true };
+  });

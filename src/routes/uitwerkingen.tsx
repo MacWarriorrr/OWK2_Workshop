@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { getSubmissions, createSubmission, type Submission } from "../data/submissions";
+import { getSubmissions, createSubmission, deleteSubmission, type Submission } from "../data/submissions";
 import { Button } from "../components/ui/button";
 import {
   Card,
@@ -24,7 +24,7 @@ import {
 import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Loader2, Trash2 } from "lucide-react";
 
 export const Route = createFileRoute("/uitwerkingen")({
   loader: async () => {
@@ -80,6 +80,19 @@ function UitwerkingenPage() {
       toast.error("Er is iets misgegaan bij het uploaden.");
     } finally {
       setIsUploading(false);
+    }
+  }
+
+  async function handleDelete(id: string) {
+    if (!window.confirm("Weet je zeker dat je deze uitwerking wilt verwijderen?")) return;
+    
+    try {
+      await deleteSubmission({ data: id });
+      toast.success("Uitwerking succesvol verwijderd!");
+      await router.invalidate();
+    } catch (error) {
+      console.error(error);
+      toast.error("Er is iets misgegaan bij het verwijderen.");
     }
   }
 
@@ -180,7 +193,15 @@ function UitwerkingenPage() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {submissions.map((sub: Submission) => (
-                  <Card key={sub.id} className="overflow-hidden group hover:shadow-md transition-all duration-300 border-border/50 bg-card">
+                  <Card key={sub.id} className="overflow-hidden group hover:shadow-md transition-all duration-300 border-border/50 bg-card relative">
+                    <Button
+                      variant="destructive"
+                      size="icon"
+                      className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity"
+                      onClick={() => handleDelete(sub.id)}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
                     <div className="aspect-[4/3] overflow-hidden bg-muted relative">
                       <img
                         src={sub.image_url}

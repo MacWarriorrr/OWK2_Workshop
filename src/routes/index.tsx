@@ -54,6 +54,12 @@ function Index() {
             <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
           </Link>
           <Link
+            to="/uitwerkingen"
+            className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-5 py-3 text-sm font-semibold text-foreground shadow-soft transition hover:bg-muted"
+          >
+            Bekijk uitwerkingen
+          </Link>
+          <Link
             to="/bronnen"
             className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-5 py-3 text-sm font-semibold text-foreground shadow-soft transition hover:bg-muted"
           >
