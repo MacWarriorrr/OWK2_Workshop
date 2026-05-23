@@ -67,7 +67,37 @@ async function normalizeCatastrophicSsrResponse(response: Response): Promise<Res
 }
 
 export default {
-  async fetch(request: Request, env: unknown, ctx: unknown) {
+  async fetch(request: Request, env: any, ctx: unknown) {
+    const url = new URL(request.url);
+
+    // Serve R2 images
+    if (url.pathname.startsWith('/api/images/')) {
+      try {
+        const filename = url.pathname.replace('/api/images/', '');
+        const r2 = env.WORKSHOP_IMAGES;
+        
+        if (!r2) {
+          return new Response('R2 binding not found', { status: 500 });
+        }
+
+        const object = await r2.get(filename);
+
+        if (object === null) {
+          return new Response('Image not found', { status: 404 });
+        }
+
+        const headers = new Headers();
+        object.writeHttpMetadata(headers);
+        headers.set('etag', object.httpEtag);
+        headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+
+        return new Response(object.body, { headers });
+      } catch (e) {
+        console.error("Failed to serve image:", e);
+        return new Response('Error retrieving image', { status: 500 });
+      }
+    }
+
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);

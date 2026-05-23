@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VakkenRouteImport } from './routes/vakken'
+import { Route as UitwerkingenRouteImport } from './routes/uitwerkingen'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as OverRouteImport } from './routes/over'
 import { Route as BronnenRouteImport } from './routes/bronnen'
@@ -19,6 +20,11 @@ import { Route as ActiviteitVakRouteImport } from './routes/activiteit.$vak'
 const VakkenRoute = VakkenRouteImport.update({
   id: '/vakken',
   path: '/vakken',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UitwerkingenRoute = UitwerkingenRouteImport.update({
+  id: '/uitwerkingen',
+  path: '/uitwerkingen',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/bronnen': typeof BronnenRoute
   '/over': typeof OverRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/uitwerkingen': typeof UitwerkingenRoute
   '/vakken': typeof VakkenRoute
   '/activiteit/$vak': typeof ActiviteitVakRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/bronnen': typeof BronnenRoute
   '/over': typeof OverRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/uitwerkingen': typeof UitwerkingenRoute
   '/vakken': typeof VakkenRoute
   '/activiteit/$vak': typeof ActiviteitVakRoute
 }
@@ -69,6 +77,7 @@ export interface FileRoutesById {
   '/bronnen': typeof BronnenRoute
   '/over': typeof OverRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/uitwerkingen': typeof UitwerkingenRoute
   '/vakken': typeof VakkenRoute
   '/activiteit/$vak': typeof ActiviteitVakRoute
 }
@@ -79,6 +88,7 @@ export interface FileRouteTypes {
     | '/bronnen'
     | '/over'
     | '/sitemap.xml'
+    | '/uitwerkingen'
     | '/vakken'
     | '/activiteit/$vak'
   fileRoutesByTo: FileRoutesByTo
@@ -87,6 +97,7 @@ export interface FileRouteTypes {
     | '/bronnen'
     | '/over'
     | '/sitemap.xml'
+    | '/uitwerkingen'
     | '/vakken'
     | '/activiteit/$vak'
   id:
@@ -95,6 +106,7 @@ export interface FileRouteTypes {
     | '/bronnen'
     | '/over'
     | '/sitemap.xml'
+    | '/uitwerkingen'
     | '/vakken'
     | '/activiteit/$vak'
   fileRoutesById: FileRoutesById
@@ -104,6 +116,7 @@ export interface RootRouteChildren {
   BronnenRoute: typeof BronnenRoute
   OverRoute: typeof OverRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  UitwerkingenRoute: typeof UitwerkingenRoute
   VakkenRoute: typeof VakkenRoute
   ActiviteitVakRoute: typeof ActiviteitVakRoute
 }
@@ -115,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/vakken'
       fullPath: '/vakken'
       preLoaderRoute: typeof VakkenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/uitwerkingen': {
+      id: '/uitwerkingen'
+      path: '/uitwerkingen'
+      fullPath: '/uitwerkingen'
+      preLoaderRoute: typeof UitwerkingenRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -160,6 +180,7 @@ const rootRouteChildren: RootRouteChildren = {
   BronnenRoute: BronnenRoute,
   OverRoute: OverRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  UitwerkingenRoute: UitwerkingenRoute,
   VakkenRoute: VakkenRoute,
   ActiviteitVakRoute: ActiviteitVakRoute,
 }
