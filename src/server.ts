@@ -68,6 +68,9 @@ async function normalizeCatastrophicSsrResponse(response: Response): Promise<Res
 
 export default {
   async fetch(request: Request, env: any, ctx: unknown) {
+    // Expose env to globalThis so getPlatformEnv() in submissions.ts can find the bindings
+    Object.assign(globalThis, env);
+
     const url = new URL(request.url);
 
     // Serve R2 images
