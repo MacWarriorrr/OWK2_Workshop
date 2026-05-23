@@ -1,10 +1,11 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowLeft, BookOpen, FileText, MessageSquareQuote, RotateCcw } from "lucide-react";
+import { ArrowLeft, BookOpen, FileText, MessageSquareQuote, RotateCcw, Plus } from "lucide-react";
 import { Board, type PlacedCard } from "@/components/Board";
 import { CardInfoModal } from "@/components/CardInfoModal";
 import { ReflectionPanel } from "@/components/ReflectionPanel";
 import { SummaryPanel } from "@/components/SummaryPanel";
+import { AddCardModal } from "@/components/AddCardModal";
 import { Button } from "@/components/ui/button";
 import { cardsBySubject, type CardData } from "@/data/cards";
 import { getSubject } from "@/data/subjects";
@@ -46,10 +47,14 @@ export const Route = createFileRoute("/activiteit/$vak")({
 function ActiviteitPage() {
   const { subject } = Route.useLoaderData();
   const cards: CardData[] = cardsBySubject[subject.id as keyof typeof cardsBySubject];
+  const [customCards, setCustomCards] = useState<CardData[]>([]);
   const [positions, setPositions] = useState<Record<string, PlacedCard>>({});
   const [infoCard, setInfoCard] = useState<CardData | null>(null);
   const [reflectionOpen, setReflectionOpen] = useState(false);
   const [summaryOpen, setSummaryOpen] = useState(false);
+  const [addModalOpen, setAddModalOpen] = useState(false);
+
+  const allCards = [...cards, ...customCards];
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
@@ -86,7 +91,7 @@ function ActiviteitPage() {
       </div>
 
       <Board
-        cards={cards}
+        cards={allCards}
         positions={positions}
         subject={subject}
         onChange={setPositions}
@@ -100,6 +105,9 @@ function ActiviteitPage() {
       <div className="mt-6 flex flex-wrap gap-2">
         <Button variant="outline" onClick={() => setPositions({})}>
           <RotateCcw size={14} /> Reset bord
+        </Button>
+        <Button variant="outline" onClick={() => setAddModalOpen(true)}>
+          <Plus size={14} /> Eigen kaartje toevoegen
         </Button>
         <Button variant="outline" onClick={() => setReflectionOpen(true)}>
           <MessageSquareQuote size={14} /> Toon reflectievragen
@@ -120,9 +128,14 @@ function ActiviteitPage() {
       <SummaryPanel
         open={summaryOpen}
         onOpenChange={setSummaryOpen}
-        cards={cards}
+        cards={allCards}
         positions={positions}
         subject={subject}
+      />
+      <AddCardModal 
+        open={addModalOpen} 
+        onOpenChange={setAddModalOpen} 
+        onAdd={(card) => setCustomCards([...customCards, card])} 
       />
     </section>
   );
