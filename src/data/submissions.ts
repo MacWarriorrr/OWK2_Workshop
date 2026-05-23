@@ -27,7 +27,7 @@ export const getSubmissions = createServerFn({ method: 'GET' })
     if (!db) {
       db = (globalThis as any).WORKSHOP_DB;
     }
-    
+
     if (!db) {
       console.warn("WORKSHOP_DB not found in process.env or globalThis. Returning empty array.");
       return [];
@@ -43,7 +43,7 @@ export const getSubmissions = createServerFn({ method: 'GET' })
   });
 
 export const createSubmission = createServerFn({ method: 'POST' })
-  .validator((data: FormData) => data)
+  .inputValidator((data: FormData) => data)
   .handler(async ({ data }) => {
     const description = data.get('description') as string;
     const file = data.get('image') as File | null;
