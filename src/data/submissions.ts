@@ -90,7 +90,7 @@ export const createSubmission = createServerFn({ method: 'POST' })
   });
 
 export const deleteSubmission = createServerFn({ method: 'POST' })
-  .validator((id: unknown) => {
+  .inputValidator((id: unknown) => {
     if (typeof id !== 'string') throw new Error('Invalid ID');
     return id;
   })
