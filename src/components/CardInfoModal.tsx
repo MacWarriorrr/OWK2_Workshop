@@ -48,9 +48,6 @@ export function CardInfoModal({ card, subject, onClose }: Props) {
                   </ul>
                 </Section>
               )}
-              <p className="rounded-md bg-muted/60 px-3 py-2 text-xs text-muted-foreground">
-                {language === 'nl' ? 'Geen goede of foute antwoorden — bespreek vooral waarom je dit kaartje daar plaatst.' : 'No right or wrong answers — primarily discuss why you place this card there.'}
-              </p>
             </div>
           </>
         )}
