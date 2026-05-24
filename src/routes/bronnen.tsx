@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/bronnen")({
   head: () => ({
     meta: [
-      { title: "Bronnen en verdieping — Differentiatie en vakkenmerken" },
+      { title: "Bronnen en verdieping — The subject matter(s)" },
       {
         name: "description",
         content:

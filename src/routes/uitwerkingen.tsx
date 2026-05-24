@@ -87,7 +87,7 @@ function UitwerkingenPage() {
 
   async function handleDelete(id: string) {
     if (!window.confirm(language === 'nl' ? "Weet je zeker dat je deze uitwerking wilt verwijderen?" : "Are you sure you want to delete this result?")) return;
-    
+
     try {
       await deleteSubmission({ data: id });
       toast.success(language === 'nl' ? "Uitwerking succesvol verwijderd!" : "Result successfully deleted!");
@@ -163,7 +163,7 @@ function UitwerkingenPage() {
                           <FormLabel>{language === 'nl' ? 'Beschrijving' : 'Description'}</FormLabel>
                           <FormControl>
                             <Textarea
-                              placeholder={language === 'nl' ? "Ik heb deze sensor aangesloten door..." : "I connected this sensor by..."}
+                              placeholder={language === 'nl' ? "Tijdens de workshop heb ik geleerd dat..." : "During the workshop I learned that..."}
                               className="resize-none h-32"
                               {...field}
                             />

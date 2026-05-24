@@ -5,7 +5,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Differentiatie en vakkenmerken" },
+      { title: "The subject matter(s)" },
       {
         name: "description",
         content:
@@ -26,7 +26,11 @@ function Index() {
           {language === 'nl' ? 'Aftercare bij de workshop' : 'Workshop aftercare'}
         </span>
         <h1 className="mt-5 font-display text-5xl font-semibold leading-[1.05] tracking-tight text-foreground sm:text-6xl">
-          {language === 'nl' ? 'Differentiatie en vakkenmerken' : 'Differentiation and subject properties'}
+          {language === 'nl' ? (
+            <>The subject matter(s):<br /><span className="text-3xl sm:text-4xl text-muted-foreground">Een nieuwe blik op differentiatie?</span></>
+          ) : (
+            <>The subject matter(s):<br /><span className="text-3xl sm:text-4xl text-muted-foreground">A new look on differentiation?</span></>
+          )}
         </h1>
         <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
           {language === 'nl' ? 'Verken welke vorm van differentiatie past bij jouw vak.' : 'Explore which form of differentiation fits your subject.'}
@@ -69,17 +73,17 @@ function Index() {
         </div>
 
         <div className="mt-16 grid gap-4 sm:grid-cols-3">
-          <Pillar 
-            title="Convergent" 
-            body={language === 'nl' ? "Leerlingen werken toe naar gemeenschappelijke kernstof, gedeelde doelen of eenzelfde eindniveau." : "Students work towards common core material, shared goals, or the same final level."} 
+          <Pillar
+            title="Convergent"
+            body={language === 'nl' ? "Leerlingen werken toe naar gemeenschappelijke kernstof, gedeelde doelen of eenzelfde eindniveau." : "Students work towards common core material, shared goals, or the same final level."}
           />
-          <Pillar 
-            title="Divergent" 
-            body={language === 'nl' ? "Verschillen tussen leerlingen krijgen ruimte in tempo, niveau, interesse, aanpak of product." : "Differences between students are accommodated in pace, level, interest, approach, or product."} 
+          <Pillar
+            title="Divergent"
+            body={language === 'nl' ? "Verschillen tussen leerlingen krijgen ruimte in tempo, niveau, interesse, aanpak of product." : "Differences between students are accommodated in pace, level, interest, approach, or product."}
           />
-          <Pillar 
-            title={language === 'nl' ? "Spanning" : "Tension"} 
-            body={language === 'nl' ? "Kenmerken van je vak kunnen je naar beide kanten trekken. Die spanning maakt het gesprek juist waardevol." : "Properties of your subject can pull you in both directions. That tension is exactly what makes the discussion valuable."} 
+          <Pillar
+            title={language === 'nl' ? "Spanning" : "Tension"}
+            body={language === 'nl' ? "Kenmerken van je vak kunnen je naar beide kanten trekken. Die spanning maakt het gesprek juist waardevol." : "Properties of your subject can pull you in both directions. That tension is exactly what makes the discussion valuable."}
           />
         </div>
 

@@ -74,14 +74,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Differentiatie en vakkenmerken" },
+      { title: "The subject matter(s)" },
       {
         name: "description",
         content:
           "Verken welke vorm van differentiatie past bij jouw vak. Digitale verdieping bij een workshop over convergente en divergente differentiatie.",
       },
-      { property: "og:title", content: "Differentiatie en vakkenmerken" },
-      { name: "twitter:title", content: "Differentiatie en vakkenmerken" },
+      { property: "og:title", content: "The subject matter(s)" },
+      { name: "twitter:title", content: "The subject matter(s)" },
       { name: "description", content: "Interactive web app for exploring subject-specific differentiation strategies." },
       { property: "og:description", content: "Interactive web app for exploring subject-specific differentiation strategies." },
       { name: "twitter:description", content: "Interactive web app for exploring subject-specific differentiation strategies." },
@@ -140,7 +140,7 @@ function Footer() {
   const { language } = useLanguage();
   return (
     <footer className="border-t border-border/70 py-6 text-center text-xs text-muted-foreground">
-      {language === 'nl' ? 'Differentiatie en vakkenmerken — digitale verdieping bij een workshop voor lerarenopleiding.' : 'Differentiation and subject properties — digital background for a teacher training workshop.'}
+      {language === 'nl' ? 'The subject matter(s): Een nieuwe blik op differentiatie? — digitale verdieping bij een workshop voor lerarenopleiding.' : 'The subject matter(s): A new look on differentiation? — digital background for a teacher training workshop.'}
     </footer>
   );
 }

@@ -3,7 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 export const Route = createFileRoute("/over")({
   head: () => ({
     meta: [
-      { title: "Over deze tool — Differentiatie en vakkenmerken" },
+      { title: "Over deze tool — The subject matter(s)" },
       {
         name: "description",
         content:

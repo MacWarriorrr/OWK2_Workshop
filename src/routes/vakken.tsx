@@ -6,7 +6,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 export const Route = createFileRoute("/vakken")({
   head: () => ({
     meta: [
-      { title: "Kies je vak — Differentiatie en vakkenmerken" },
+      { title: "Kies je vak — The subject matter(s)" },
       { name: "description", content: "Kies het vak waarvoor je de differentiatie-activiteit wilt doen." },
     ],
   }),
