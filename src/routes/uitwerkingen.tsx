@@ -132,14 +132,24 @@ function UitwerkingenPage() {
                         <FormItem>
                           <FormLabel>{language === 'nl' ? 'Foto (Max 5MB)' : 'Photo (Max 5MB)'}</FormLabel>
                           <FormControl>
-                            <Input
-                              type="file"
-                              accept="image/jpeg, image/png, image/webp"
-                              onChange={(e) =>
-                                onChange(e.target.files && e.target.files[0])
-                              }
-                              {...fieldProps}
-                            />
+                            <div className="relative">
+                              <Input
+                                type="file"
+                                id="image-upload"
+                                accept="image/jpeg, image/png, image/webp"
+                                className="hidden"
+                                onChange={(e) =>
+                                  onChange(e.target.files && e.target.files[0])
+                                }
+                                {...fieldProps}
+                              />
+                              <label
+                                htmlFor="image-upload"
+                                className="flex h-10 w-full cursor-pointer items-center justify-start rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground hover:bg-accent hover:text-accent-foreground"
+                              >
+                                {value ? (value as any).name : (language === 'nl' ? "Bestand kiezen..." : "Choose file...")}
+                              </label>
+                            </div>
                           </FormControl>
                           <FormMessage />
                         </FormItem>

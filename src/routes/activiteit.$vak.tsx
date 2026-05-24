@@ -81,7 +81,7 @@ function ActiviteitPage() {
           className="rounded-lg border border-border bg-card px-3 py-2 text-xs font-semibold uppercase tracking-wider shadow-soft"
           style={{ color: subject.strong }}
         >
-          {language === 'nl' ? 'Vak' : 'Subject'}: {subject.name}
+          {language === 'nl' ? 'Vak' : 'Subject'}: {language === 'en' && subject.nameEn ? subject.nameEn : subject.name}
         </div>
       </div>
 

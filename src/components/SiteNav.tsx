@@ -16,7 +16,7 @@ export function SiteNav() {
     <header className="sticky top-0 z-30 border-b border-border/70 bg-background/80 backdrop-blur">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
         <Link to="/" className="font-display text-lg font-semibold tracking-tight text-foreground">
-          Differentiatie<span className="text-muted-foreground"> · {language === 'nl' ? 'vakkenmerken' : 'subject properties'}</span>
+          {language === 'nl' ? 'Differentiatie' : 'Differentiation'}<span className="text-muted-foreground"> · {language === 'nl' ? 'vakkenmerken' : 'subject properties'}</span>
         </Link>
         <ul className="flex items-center gap-1 text-sm">
           {items.map((it) => (

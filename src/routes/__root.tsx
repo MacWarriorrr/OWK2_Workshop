@@ -9,7 +9,7 @@ import {
 } from "@tanstack/react-router";
 import { SiteNav } from "@/components/SiteNav";
 import { Toaster } from "@/components/ui/sonner";
-import { LanguageProvider } from "@/contexts/LanguageContext";
+import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 
 import appCss from "../styles.css?url";
 
@@ -128,12 +128,19 @@ function RootComponent() {
           <main className="flex-1">
             <Outlet />
           </main>
-          <footer className="border-t border-border/70 py-6 text-center text-xs text-muted-foreground">
-            Differentiatie en vakkenmerken — digitale verdieping bij een workshop voor lerarenopleiding.
-          </footer>
+          <Footer />
           <Toaster />
         </div>
       </QueryClientProvider>
     </LanguageProvider>
+  );
+}
+
+function Footer() {
+  const { language } = useLanguage();
+  return (
+    <footer className="border-t border-border/70 py-6 text-center text-xs text-muted-foreground">
+      {language === 'nl' ? 'Differentiatie en vakkenmerken — digitale verdieping bij een workshop voor lerarenopleiding.' : 'Differentiation and subject properties — digital background for a teacher training workshop.'}
+    </footer>
   );
 }
