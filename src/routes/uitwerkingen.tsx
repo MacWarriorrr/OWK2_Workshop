@@ -13,6 +13,12 @@ import {
   CardTitle,
 } from "../components/ui/card";
 import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "../components/ui/dialog";
+import {
   Form,
   FormControl,
   FormDescription,
@@ -219,14 +225,28 @@ function UitwerkingenPage() {
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
-                    <div className="aspect-[4/3] overflow-hidden bg-muted relative">
-                      <img
-                        src={sub.image_url}
-                        alt={sub.description}
-                        className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
-                        loading="lazy"
-                      />
-                    </div>
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <div className="aspect-[4/3] overflow-hidden bg-muted relative cursor-pointer">
+                          <img
+                            src={sub.image_url}
+                            alt={sub.description}
+                            className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
+                            loading="lazy"
+                          />
+                        </div>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-4xl p-0 overflow-hidden bg-transparent border-none shadow-none">
+                        <DialogTitle className="sr-only">
+                          {language === 'nl' ? 'Uitwerking vergroten' : 'Enlarge result'}
+                        </DialogTitle>
+                        <img
+                          src={sub.image_url}
+                          alt={sub.description}
+                          className="w-full h-auto max-h-[90vh] object-contain rounded-md"
+                        />
+                      </DialogContent>
+                    </Dialog>
                     <CardContent className="p-4">
                       <p className="text-sm line-clamp-3 text-card-foreground">
                         {sub.description}
