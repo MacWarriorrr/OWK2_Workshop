@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import type { CardData } from "@/data/cards";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Props {
   open: boolean;
@@ -19,6 +20,7 @@ interface Props {
 }
 
 export function AddCardModal({ open, onOpenChange, onAdd }: Props) {
+  const { language } = useLanguage();
   const [title, setTitle] = useState("");
   const [statement, setStatement] = useState("");
 
@@ -30,7 +32,10 @@ export function AddCardModal({ open, onOpenChange, onAdd }: Props) {
       id: `custom-${Date.now()}`,
       title: title.trim(),
       statement: statement.trim(),
-      category: "Eigen inbreng",
+      category: language === 'nl' ? "Eigen inbreng" : "Custom",
+      titleEn: language === 'en' ? title.trim() : undefined,
+      statementEn: language === 'en' ? statement.trim() : undefined,
+      categoryEn: "Custom",
     };
 
     onAdd(newCard);
@@ -43,27 +48,31 @@ export function AddCardModal({ open, onOpenChange, onAdd }: Props) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle className="font-display text-xl">Eigen kaartje toevoegen</DialogTitle>
+          <DialogTitle className="font-display text-xl">
+            {language === 'nl' ? 'Eigen kaartje toevoegen' : 'Add custom card'}
+          </DialogTitle>
           <DialogDescription>
-            Voeg een eigen kenmerk, uitspraak of gedachte toe die je belangrijk vindt voor differentiatie binnen jouw vak.
+            {language === 'nl' 
+              ? 'Voeg een eigen kenmerk, uitspraak of gedachte toe die je belangrijk vindt voor differentiatie binnen jouw vak.' 
+              : 'Add a custom characteristic, statement, or thought that you consider important for differentiation within your subject.'}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 pt-4">
           <div className="space-y-2">
-            <Label htmlFor="title">Korte titel</Label>
+            <Label htmlFor="title">{language === 'nl' ? 'Korte titel' : 'Short title'}</Label>
             <Input
               id="title"
-              placeholder="Bijv. 'Creativiteit'"
+              placeholder={language === 'nl' ? "Bijv. 'Creativiteit'" : "e.g. 'Creativity'"}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="statement">Stelling of omschrijving</Label>
+            <Label htmlFor="statement">{language === 'nl' ? 'Stelling of omschrijving' : 'Statement or description'}</Label>
             <Textarea
               id="statement"
-              placeholder="Beschrijf het kenmerk in één of twee zinnen..."
+              placeholder={language === 'nl' ? "Beschrijf het kenmerk in één of twee zinnen..." : "Describe the characteristic in one or two sentences..."}
               value={statement}
               onChange={(e) => setStatement(e.target.value)}
               required
@@ -72,9 +81,9 @@ export function AddCardModal({ open, onOpenChange, onAdd }: Props) {
           </div>
           <div className="flex justify-end gap-2 pt-2">
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-              Annuleren
+              {language === 'nl' ? 'Annuleren' : 'Cancel'}
             </Button>
-            <Button type="submit">Toevoegen</Button>
+            <Button type="submit">{language === 'nl' ? 'Toevoegen' : 'Add'}</Button>
           </div>
         </form>
       </DialogContent>

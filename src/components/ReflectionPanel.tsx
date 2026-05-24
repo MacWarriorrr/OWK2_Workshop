@@ -46,6 +46,48 @@ const questionsSections = [
   }
 ];
 
+const questionsSectionsEn = [
+  {
+    title: "Warming-up questions",
+    questions: [
+      "Are there students that you offer more support during your lesson, and why?",
+      "In what ways do you use differentiation in your current lessons?",
+      "Do you have an example of your use of divergent/convergent differentiation?",
+    ],
+  },
+  {
+    title: "Extending questions",
+    questions: [
+      "What assumptions underly the placement of this card?",
+      "How much are you consciouscly thinking about the contents of this card during your lesson?",
+      "Do you perform this action because it is required or because you find it personally important?",
+      "Do you think you have a personal preference to either strategy?",
+      "Which of these cards is most important to you?",
+      "Which card is your least favorite and how are you still forced into this?",
+    ],
+  },
+  {
+    title: "Reflecting questions",
+    questions: [
+      "Is there a pattern in the placement of the cards?",
+      "Did you expect the location of these cards at the start of the workshop?",
+      "Having performed this exercise, do you see a link between your course and your practiced differentiation strategy?",
+      "Which cards would you like to add?",
+      "What assumptions underly the placement of this card?",
+    ],
+  },
+  {
+    title: "Concluding questions (Plenary)",
+    questions: [
+      "Having performed this exercise, do you see a link between your course and your practiced differentiation strategy?",
+      "What is the biggest difference you see between posters?",
+      "What are you taking with you after this course has been done?",
+    ],
+  }
+];
+
+import { useLanguage } from "@/contexts/LanguageContext";
+
 export function ReflectionPanel({
   open,
   onOpenChange,
@@ -53,17 +95,24 @@ export function ReflectionPanel({
   open: boolean;
   onOpenChange: (o: boolean) => void;
 }) {
+  const { language } = useLanguage();
+  const sections = language === 'nl' ? questionsSections : questionsSectionsEn;
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent className="w-full overflow-y-auto sm:max-w-md">
         <SheetHeader>
-          <SheetTitle className="font-display text-2xl">Reflectievragen</SheetTitle>
+          <SheetTitle className="font-display text-2xl">
+            {language === 'nl' ? 'Reflectievragen' : 'Reflection questions'}
+          </SheetTitle>
           <SheetDescription>
-            Gebruik deze vragen om je plaatsing te bespreken — alleen of met een collega.
+            {language === 'nl' 
+              ? 'Gebruik deze vragen om je plaatsing te bespreken — alleen of met een collega.'
+              : 'Use these questions to discuss your placement — alone or with a colleague.'}
           </SheetDescription>
         </SheetHeader>
         <div className="mt-6 space-y-8 px-4 pb-8">
-          {questionsSections.map((section, sIdx) => (
+          {sections.map((section, sIdx) => (
             <div key={sIdx}>
               <h3 className="mb-3 font-display text-lg font-semibold tracking-tight text-primary">
                 {section.title}

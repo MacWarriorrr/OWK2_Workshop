@@ -14,15 +14,22 @@ export const Route = createFileRoute("/bronnen")({
   component: BronnenPage,
 });
 
+import { useLanguage } from "@/contexts/LanguageContext";
+
 function BronnenPage() {
+  const { language } = useLanguage();
   return (
     <section className="mx-auto max-w-4xl px-6 py-12">
-      <h1 className="font-display text-4xl font-semibold tracking-tight">Bronnen en verdieping</h1>
+      <h1 className="font-display text-4xl font-semibold tracking-tight">
+        {language === 'nl' ? 'Bronnen en verdieping' : 'Sources and background'}
+      </h1>
       <p className="mt-2 max-w-2xl text-muted-foreground">
-        Een overzicht van de literatuur en bronnen achter de theoretische basis van deze tool. Bedoeld om dieper te lezen, te bespreken en mee te nemen in je eigen praktijk.
+        {language === 'nl' 
+          ? 'Een overzicht van de literatuur en bronnen achter de theoretische basis van deze tool. Bedoeld om dieper te lezen, te bespreken en mee te nemen in je eigen praktijk.'
+          : 'An overview of the literature and sources behind the theoretical basis of this tool. Intended for deeper reading, discussion, and to take with you in your own practice.'}
       </p>
 
-      <Group title="Literatuur">
+      <Group title={language === 'nl' ? 'Literatuur' : 'Literature'}>
         <Item>
           Ceci, S. J., & Papierno, P. B. (2005). The rhetoric and reality of gap closing: when the “Have-Nots” gain but the “Haves” gain even more. <em>American Psychologist, 60</em>(2), 149–160.{" "}
           <a className="link" href="https://doi.org/10.1037/0003-066x.60.2.149" target="_blank" rel="noreferrer">

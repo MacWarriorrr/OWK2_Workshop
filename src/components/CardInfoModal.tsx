@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/dialog";
 import type { CardData } from "@/data/cards";
 import type { Subject } from "@/data/subjects";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Props {
   card: CardData | null;
@@ -15,6 +16,11 @@ interface Props {
 }
 
 export function CardInfoModal({ card, subject, onClose }: Props) {
+  const { language } = useLanguage();
+  const title = language === 'en' && card?.titleEn ? card.titleEn : card?.title;
+  const statement = language === 'en' && card?.statementEn ? card.statementEn : card?.statement;
+  const category = language === 'en' && card?.categoryEn ? card.categoryEn : card?.category;
+
   return (
     <Dialog open={!!card} onOpenChange={(o) => !o && onClose()}>
       <DialogContent className="max-w-lg">
@@ -25,16 +31,16 @@ export function CardInfoModal({ card, subject, onClose }: Props) {
                 className="mb-1 inline-block w-fit rounded px-2 py-0.5 text-xs font-medium uppercase tracking-wider"
                 style={{ background: subject.soft, color: subject.strong }}
               >
-                {card.category}
+                {category}
               </div>
-              <DialogTitle className="font-display text-xl">{card.title}</DialogTitle>
+              <DialogTitle className="font-display text-xl">{title}</DialogTitle>
               <DialogDescription className="text-base text-foreground/80">
-                {card.statement}
+                {statement}
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-4 text-sm">
               {card.sources && card.sources.length > 0 && (
-                <Section label="Bronnen">
+                <Section label={language === 'nl' ? "Bronnen" : "Sources"}>
                   <ul className="list-disc space-y-1 pl-5 text-muted-foreground">
                     {card.sources.map((s, i) => (
                       <li key={i}>{s}</li>
@@ -43,7 +49,7 @@ export function CardInfoModal({ card, subject, onClose }: Props) {
                 </Section>
               )}
               <p className="rounded-md bg-muted/60 px-3 py-2 text-xs text-muted-foreground">
-                Geen goede of foute antwoorden — bespreek vooral waarom je dit kaartje daar plaatst.
+                {language === 'nl' ? 'Geen goede of foute antwoorden — bespreek vooral waarom je dit kaartje daar plaatst.' : 'No right or wrong answers — primarily discuss why you place this card there.'}
               </p>
             </div>
           </>

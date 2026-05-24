@@ -25,6 +25,7 @@ import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
 import { toast } from "sonner";
 import { Loader2, Trash2 } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const Route = createFileRoute("/uitwerkingen")({
   loader: async () => {
@@ -49,6 +50,7 @@ const formSchema = z.object({
 });
 
 function UitwerkingenPage() {
+  const { language } = useLanguage();
   const { submissions } = Route.useLoaderData();
   const router = useRouter();
   const [isUploading, setIsUploading] = useState(false);
@@ -70,29 +72,29 @@ function UitwerkingenPage() {
 
       await createSubmission({ data: formData });
 
-      toast.success("Uitwerking succesvol geüpload!");
+      toast.success(language === 'nl' ? "Uitwerking succesvol geüpload!" : "Result successfully uploaded!");
       form.reset();
 
       // Refresh the page data
       await router.invalidate();
     } catch (error) {
       console.error(error);
-      toast.error("Er is iets misgegaan bij het uploaden.");
+      toast.error(language === 'nl' ? "Er is iets misgegaan bij het uploaden." : "Something went wrong during upload.");
     } finally {
       setIsUploading(false);
     }
   }
 
   async function handleDelete(id: string) {
-    if (!window.confirm("Weet je zeker dat je deze uitwerking wilt verwijderen?")) return;
+    if (!window.confirm(language === 'nl' ? "Weet je zeker dat je deze uitwerking wilt verwijderen?" : "Are you sure you want to delete this result?")) return;
     
     try {
       await deleteSubmission({ data: id });
-      toast.success("Uitwerking succesvol verwijderd!");
+      toast.success(language === 'nl' ? "Uitwerking succesvol verwijderd!" : "Result successfully deleted!");
       await router.invalidate();
     } catch (error) {
       console.error(error);
-      toast.error("Er is iets misgegaan bij het verwijderen.");
+      toast.error(language === 'nl' ? "Er is iets misgegaan bij het verwijderen." : "Something went wrong during deletion.");
     }
   }
 
@@ -101,10 +103,10 @@ function UitwerkingenPage() {
       <div className="flex flex-col gap-8">
         <div>
           <h1 className="text-4xl font-bold tracking-tight mb-2">
-            Galerij van Uitwerkingen
+            {language === 'nl' ? 'Galerij van Uitwerkingen' : 'Gallery of Results'}
           </h1>
           <p className="text-muted-foreground text-lg">
-            Bekijk de creaties van anderen en deel jouw eigen fysieke workshop-uitwerking.
+            {language === 'nl' ? 'Bekijk de creaties van anderen en deel jouw eigen fysieke workshop-uitwerking.' : 'View the creations of others and share your own physical workshop result.'}
           </p>
         </div>
 
@@ -112,10 +114,9 @@ function UitwerkingenPage() {
           <div className="lg:col-span-1">
             <Card className="sticky top-24 shadow-sm border-border/50">
               <CardHeader>
-                <CardTitle>Deel jouw creatie</CardTitle>
+                <CardTitle>{language === 'nl' ? 'Deel jouw creatie' : 'Share your creation'}</CardTitle>
                 <CardDescription>
-                  Upload een foto van je uitwerking en vertel ons kort hoe je
-                  het hebt gemaakt of wat je hebt geleerd.
+                  {language === 'nl' ? 'Upload een foto van je uitwerking en vertel ons kort hoe je het hebt gemaakt of wat je hebt geleerd.' : 'Upload a photo of your result and tell us briefly how you made it or what you learned.'}
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -129,7 +130,7 @@ function UitwerkingenPage() {
                       name="image"
                       render={({ field: { value, onChange, ...fieldProps } }) => (
                         <FormItem>
-                          <FormLabel>Foto (Max 5MB)</FormLabel>
+                          <FormLabel>{language === 'nl' ? 'Foto (Max 5MB)' : 'Photo (Max 5MB)'}</FormLabel>
                           <FormControl>
                             <Input
                               type="file"
@@ -149,16 +150,16 @@ function UitwerkingenPage() {
                       name="description"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Beschrijving</FormLabel>
+                          <FormLabel>{language === 'nl' ? 'Beschrijving' : 'Description'}</FormLabel>
                           <FormControl>
                             <Textarea
-                              placeholder="Ik heb deze sensor aangesloten door..."
+                              placeholder={language === 'nl' ? "Ik heb deze sensor aangesloten door..." : "I connected this sensor by..."}
                               className="resize-none h-32"
                               {...field}
                             />
                           </FormControl>
                           <FormDescription>
-                            Minimaal 10 karakters.
+                            {language === 'nl' ? 'Minimaal 10 karakters.' : 'Minimum 10 characters.'}
                           </FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -168,10 +169,10 @@ function UitwerkingenPage() {
                       {isUploading ? (
                         <>
                           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Uploaden...
+                          {language === 'nl' ? 'Uploaden...' : 'Uploading...'}
                         </>
                       ) : (
-                        "Upload Uitwerking"
+                        language === 'nl' ? "Upload Uitwerking" : "Upload Result"
                       )}
                     </Button>
                   </form>
@@ -184,10 +185,10 @@ function UitwerkingenPage() {
             {submissions.length === 0 ? (
               <div className="flex flex-col items-center justify-center p-12 text-center border rounded-xl border-dashed bg-muted/20">
                 <p className="text-muted-foreground text-lg mb-2">
-                  Er zijn nog geen uitwerkingen gedeeld.
+                  {language === 'nl' ? 'Er zijn nog geen uitwerkingen gedeeld.' : 'No results have been shared yet.'}
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  Wees de eerste die een creatie uploadt!
+                  {language === 'nl' ? 'Wees de eerste die een creatie uploadt!' : 'Be the first to upload a creation!'}
                 </p>
               </div>
             ) : (

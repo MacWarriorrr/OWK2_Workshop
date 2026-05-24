@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-router";
 import { SiteNav } from "@/components/SiteNav";
 import { Toaster } from "@/components/ui/sonner";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
 import appCss from "../styles.css?url";
 
@@ -120,17 +121,19 @@ function RootShell({ children }: { children: React.ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="flex min-h-screen flex-col">
-        <SiteNav />
-        <main className="flex-1">
-          <Outlet />
-        </main>
-        <footer className="border-t border-border/70 py-6 text-center text-xs text-muted-foreground">
-          Differentiatie en vakkenmerken — digitale verdieping bij een workshop voor lerarenopleiding.
-        </footer>
-        <Toaster />
-      </div>
-    </QueryClientProvider>
+    <LanguageProvider>
+      <QueryClientProvider client={queryClient}>
+        <div className="flex min-h-screen flex-col">
+          <SiteNav />
+          <main className="flex-1">
+            <Outlet />
+          </main>
+          <footer className="border-t border-border/70 py-6 text-center text-xs text-muted-foreground">
+            Differentiatie en vakkenmerken — digitale verdieping bij een workshop voor lerarenopleiding.
+          </footer>
+          <Toaster />
+        </div>
+      </QueryClientProvider>
+    </LanguageProvider>
   );
 }

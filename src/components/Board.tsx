@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Info } from "lucide-react";
 import type { CardData } from "@/data/cards";
 import type { Subject } from "@/data/subjects";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export interface PlacedCard {
   id: string;
@@ -31,6 +32,7 @@ const CARD_W = 180;
 const CARD_H = 92;
 
 export function Board({ cards, positions, subject, onChange, onInfo }: BoardProps) {
+  const { language } = useLanguage();
   const boardRef = useRef<HTMLDivElement>(null);
   const [drag, setDrag] = useState<DragState | null>(null);
 
@@ -109,7 +111,7 @@ export function Board({ cards, positions, subject, onChange, onInfo }: BoardProp
       <div className="relative">
         {/* Y label top */}
         <div className="mb-2 flex items-center justify-center text-xs font-medium uppercase tracking-wider text-muted-foreground">
-          Relevant voor mijn dagelijkse lespraktijk
+          {language === 'nl' ? 'Relevant voor mijn dagelijkse lespraktijk' : 'Relevant to my day-to-day teaching'}
         </div>
 
         <div className="flex items-stretch gap-3">
@@ -119,7 +121,7 @@ export function Board({ cards, positions, subject, onChange, onInfo }: BoardProp
               className="rounded-md bg-card px-2 py-3 text-center text-xs font-semibold uppercase tracking-wider text-foreground shadow-soft whitespace-nowrap"
               style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
             >
-              Convergente differentiatie
+              {language === 'nl' ? 'Convergente differentiatie' : 'Convergent Differentiation'}
             </div>
           </div>
 
@@ -140,10 +142,10 @@ export function Board({ cards, positions, subject, onChange, onInfo }: BoardProp
               Relevant · Divergent
             </span>
             <span className="pointer-events-none absolute bottom-3 left-3 text-[10px] uppercase tracking-wider text-muted-foreground">
-              Niet relevant · Convergent
+              {language === 'nl' ? 'Niet relevant' : 'Not relevant'} · Convergent
             </span>
             <span className="pointer-events-none absolute bottom-3 right-3 text-right text-[10px] uppercase tracking-wider text-muted-foreground">
-              Niet relevant · Divergent
+              {language === 'nl' ? 'Niet relevant' : 'Not relevant'} · Divergent
             </span>
 
             {/* placed cards */}
@@ -174,13 +176,13 @@ export function Board({ cards, positions, subject, onChange, onInfo }: BoardProp
               className="rounded-md bg-card px-2 py-3 text-center text-xs font-semibold uppercase tracking-wider text-foreground shadow-soft whitespace-nowrap"
               style={{ writingMode: "vertical-rl" }}
             >
-              Divergente differentiatie
+              {language === 'nl' ? 'Divergente differentiatie' : 'Divergent Differentiation'}
             </div>
           </div>
         </div>
 
         <div className="mt-2 flex items-center justify-center text-xs font-medium uppercase tracking-wider text-muted-foreground">
-          Niet relevant voor mijn dagelijkse lespraktijk
+          {language === 'nl' ? 'Niet relevant voor mijn dagelijkse lespraktijk' : 'Not relevant to my day-to-day teaching'}
         </div>
       </div>
 
@@ -188,10 +190,10 @@ export function Board({ cards, positions, subject, onChange, onInfo }: BoardProp
       <div className="rounded-2xl border border-border bg-card/40 p-4 shadow-soft">
         <div className="mb-3 flex items-center justify-between">
           <h3 className="text-sm font-semibold text-foreground">
-            Kaartjes ({trayCards.length})
+            {language === 'nl' ? 'Kaartjes' : 'Cards'} ({trayCards.length})
           </h3>
           <p className="text-xs text-muted-foreground">
-            Sleep een kaartje naar het bord. Geen goede of foute antwoorden.
+            {language === 'nl' ? 'Sleep een kaartje naar het bord. Geen goede of foute antwoorden.' : 'Drag a card to the board. No right or wrong answers.'}
           </p>
         </div>
         <div className="flex flex-wrap gap-3">
@@ -210,7 +212,7 @@ export function Board({ cards, positions, subject, onChange, onInfo }: BoardProp
             );
           })}
           {trayCards.length === 0 && (
-            <p className="text-sm text-muted-foreground">Alle kaartjes zijn geplaatst.</p>
+            <p className="text-sm text-muted-foreground">{language === 'nl' ? 'Alle kaartjes zijn geplaatst.' : 'All cards have been placed.'}</p>
           )}
         </div>
       </div>
@@ -249,6 +251,10 @@ interface ChipProps {
 }
 
 function CardChip({ card, subject, style, onPointerDown, onInfo, dragging }: ChipProps) {
+  const { language } = useLanguage();
+  const title = language === 'en' && card.titleEn ? card.titleEn : card.title;
+  const category = language === 'en' && card.categoryEn ? card.categoryEn : card.category;
+
   return (
     <div
       onPointerDown={onPointerDown}
@@ -267,10 +273,10 @@ function CardChip({ card, subject, style, onPointerDown, onInfo, dragging }: Chi
             className="mb-0.5 inline-block rounded px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider"
             style={{ background: subject.soft, color: subject.strong }}
           >
-            {card.category}
+            {category}
           </div>
-          <div className="truncate text-sm font-semibold text-foreground" title={card.title}>
-            {card.title}
+          <div className="truncate text-sm font-semibold text-foreground" title={title}>
+            {title}
           </div>
         </div>
         <button
