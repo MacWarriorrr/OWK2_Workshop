@@ -70,8 +70,8 @@ function ActiviteitPage() {
             Plaats de kaartjes op het bord
           </h1>
           <p className="mt-2 max-w-3xl text-sm text-muted-foreground">
-            Sleep de kaartjes naar het bord. Bepaal per kaartje eerst hoe belangrijk dit kenmerk is
-            voor differentiatie binnen jouw vak. Bepaal daarna of het kenmerk eerder richting
+            Sleep de kaartjes naar het bord. Bepaal per kaartje eerst hoe relevant dit kenmerk is
+            voor jouw dagelijkse lespraktijk. Bepaal daarna of het kenmerk eerder richting
             convergente of divergente differentiatie wijst.
           </p>
         </div>
@@ -85,9 +85,9 @@ function ActiviteitPage() {
 
       {/* Axis explanations */}
       <div className="mb-6 grid gap-3 rounded-xl border border-border bg-card/60 p-4 text-sm shadow-soft sm:grid-cols-3">
-        <Axis label="Convergent" body="Leerlingen werken toe naar gemeenschappelijke kernstof, gedeelde doelen of eenzelfde eindniveau." />
-        <Axis label="Divergent" body="Verschillen tussen leerlingen krijgen ruimte in tempo, niveau, interesse, aanpak of product." />
-        <Axis label="Belangrijkheid" body="Hoe bepalend vind je dit kenmerk voor differentiatie binnen jouw vak?" />
+        <Axis label="Convergente differentiatie" body="Leerlingen werken toe naar gemeenschappelijke kernstof, gedeelde doelen of eenzelfde eindniveau." />
+        <Axis label="Divergente differentiatie" body="Verschillen tussen leerlingen krijgen ruimte in tempo, niveau, interesse, aanpak of product." />
+        <Axis label="Relevantie" body="Hoe relevant vind je dit kenmerk voor jouw dagelijkse lespraktijk?" />
       </div>
 
       <Board

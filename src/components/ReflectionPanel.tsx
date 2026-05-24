@@ -6,15 +6,44 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 
-const questions = [
-  "Welke kaartjes liggen het meest richting convergent?",
-  "Welke kaartjes liggen het meest richting divergent?",
-  "Welke kaartjes heb je het hoogst geplaatst, en waarom?",
-  "Welke kaartjes veroorzaken de meeste spanning?",
-  "Waar botst jouw persoonlijke voorkeur met wat het vak lijkt te vragen?",
-  "Wat betekent dit voor hoe je differentiatie in dit vak zou vormgeven?",
-  "Welke vormen van differentiatie lijken haalbaar binnen jouw vakcontext?",
-  "Welke verschillen tussen leerlingen wil je verkleinen, en welke verschillen wil je juist ruimte geven?",
+const questionsSections = [
+  {
+    title: "Opstart vragen",
+    questions: [
+      "Welke leerlingen geef je meer tijd in je lessen?",
+      "Op wat voor manieren differentieer je op dit moment in je lessen?",
+      "Geef een voorbeeld van convergente/divergent differentiatie die je in je les hebt toegepast?",
+    ],
+  },
+  {
+    title: "Proces vragen",
+    questions: [
+      "Waarop baseren jullie deze plaatsing?",
+      "Hoe erg houdt je hier bewust rekening mee?",
+      "Doen jullie dit in je les omdat het een vereiste is, of omdat je het zelf belangrijk vindt?",
+      "Heb je zelf een voorkeur voor convergente of divergente differentiatie?",
+      "Welke van de kaartjes is het meest belangrijk en het minst belangrijk?",
+      "Welke kaart is je minst favoriete en hoe wordt je hier toch toe gedwongen?",
+    ],
+  },
+  {
+    title: "Afrondende vragen",
+    questions: [
+      "Zien jullie een patroon in de verdeling van je kaarten op de assen?",
+      "Had je zelf deze verdeling van tevoren verwacht?",
+      "Met deze indeling, zien jullie dan een link tussen het vak wat je geeft en de differentiatie methode?",
+      "Welke kaartjes zou je willen toevoegen, of het liefste weghalen?",
+      "Wat zegt deze verdeling van kaartjes over je eigen aannames over differentatie?",
+    ],
+  },
+  {
+    title: "Afsluitende vragen (Klassikaal)",
+    questions: [
+      "Zien jullie samenhang tussen je visie op differentatie en het vak waarin je lesgeeft?",
+      "Wat is het grootste verschil dat je ziet tussen de posters?",
+      "Waar ga je na deze workshop anders over nadenken in je lesgeef praktijk?",
+    ],
+  }
 ];
 
 export function ReflectionPanel({
@@ -33,14 +62,22 @@ export function ReflectionPanel({
             Gebruik deze vragen om je plaatsing te bespreken — alleen of met een collega.
           </SheetDescription>
         </SheetHeader>
-        <ol className="mt-6 space-y-4 px-4 pb-8">
-          {questions.map((q, i) => (
-            <li key={i} className="flex gap-3 rounded-lg border border-border bg-card/60 p-3">
-              <span className="font-display text-lg font-semibold text-primary">{i + 1}.</span>
-              <span className="text-sm text-foreground/90">{q}</span>
-            </li>
+        <div className="mt-6 space-y-8 px-4 pb-8">
+          {questionsSections.map((section, sIdx) => (
+            <div key={sIdx}>
+              <h3 className="mb-3 font-display text-lg font-semibold tracking-tight text-primary">
+                {section.title}
+              </h3>
+              <ul className="space-y-3">
+                {section.questions.map((q, qIdx) => (
+                  <li key={qIdx} className="flex gap-3 rounded-lg border border-border bg-card/60 p-3">
+                    <span className="text-sm text-foreground/90">{q}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
-        </ol>
+        </div>
       </SheetContent>
     </Sheet>
   );

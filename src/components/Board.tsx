@@ -109,17 +109,17 @@ export function Board({ cards, positions, subject, onChange, onInfo }: BoardProp
       <div className="relative">
         {/* Y label top */}
         <div className="mb-2 flex items-center justify-center text-xs font-medium uppercase tracking-wider text-muted-foreground">
-          Zeer belangrijk
+          Relevant voor mijn dagelijkse lespraktijk
         </div>
 
         <div className="flex items-stretch gap-3">
           {/* X axis labels left */}
           <div className="flex flex-col items-center justify-center">
             <div
-              className="rounded-md bg-card px-2 py-3 text-center text-xs font-semibold uppercase tracking-wider text-foreground shadow-soft"
+              className="rounded-md bg-card px-2 py-3 text-center text-xs font-semibold uppercase tracking-wider text-foreground shadow-soft whitespace-nowrap"
               style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
             >
-              Convergent
+              Convergente differentiatie
             </div>
           </div>
 
@@ -134,16 +134,16 @@ export function Board({ cards, positions, subject, onChange, onInfo }: BoardProp
 
             {/* corner hints */}
             <span className="pointer-events-none absolute left-3 top-3 text-[10px] uppercase tracking-wider text-muted-foreground">
-              Belangrijk · Convergent
+              Relevant · Convergent
             </span>
             <span className="pointer-events-none absolute right-3 top-3 text-right text-[10px] uppercase tracking-wider text-muted-foreground">
-              Belangrijk · Divergent
+              Relevant · Divergent
             </span>
             <span className="pointer-events-none absolute bottom-3 left-3 text-[10px] uppercase tracking-wider text-muted-foreground">
-              Minder belangrijk
+              Niet relevant · Convergent
             </span>
             <span className="pointer-events-none absolute bottom-3 right-3 text-right text-[10px] uppercase tracking-wider text-muted-foreground">
-              Minder belangrijk
+              Niet relevant · Divergent
             </span>
 
             {/* placed cards */}
@@ -171,16 +171,16 @@ export function Board({ cards, positions, subject, onChange, onInfo }: BoardProp
 
           <div className="flex flex-col items-center justify-center">
             <div
-              className="rounded-md bg-card px-2 py-3 text-center text-xs font-semibold uppercase tracking-wider text-foreground shadow-soft"
+              className="rounded-md bg-card px-2 py-3 text-center text-xs font-semibold uppercase tracking-wider text-foreground shadow-soft whitespace-nowrap"
               style={{ writingMode: "vertical-rl" }}
             >
-              Divergent
+              Divergente differentiatie
             </div>
           </div>
         </div>
 
         <div className="mt-2 flex items-center justify-center text-xs font-medium uppercase tracking-wider text-muted-foreground">
-          Minder belangrijk
+          Niet relevant voor mijn dagelijkse lespraktijk
         </div>
       </div>
 

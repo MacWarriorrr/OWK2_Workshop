@@ -31,10 +31,6 @@ export function AddCardModal({ open, onOpenChange, onAdd }: Props) {
       title: title.trim(),
       statement: statement.trim(),
       category: "Eigen inbreng",
-      explanation: "Dit kaartje is zelf toegevoegd.",
-      implication: "",
-      reflection: "",
-      sources: ["Eigen ervaring"],
     };
 
     onAdd(newCard);

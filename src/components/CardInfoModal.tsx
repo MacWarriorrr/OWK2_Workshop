@@ -33,18 +33,15 @@ export function CardInfoModal({ card, subject, onClose }: Props) {
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-4 text-sm">
-              <Section label="Korte uitleg">{card.explanation}</Section>
-              <Section label="Mogelijke denkrichting">{card.implication}</Section>
-              <Section label="Reflectievraag">
-                <em className="text-foreground/90">{card.reflection}</em>
-              </Section>
-              <Section label="Bronnen">
-                <ul className="list-disc space-y-1 pl-5 text-muted-foreground">
-                  {card.sources.map((s, i) => (
-                    <li key={i}>{s}</li>
-                  ))}
-                </ul>
-              </Section>
+              {card.sources && card.sources.length > 0 && (
+                <Section label="Bronnen">
+                  <ul className="list-disc space-y-1 pl-5 text-muted-foreground">
+                    {card.sources.map((s, i) => (
+                      <li key={i}>{s}</li>
+                    ))}
+                  </ul>
+                </Section>
+              )}
               <p className="rounded-md bg-muted/60 px-3 py-2 text-xs text-muted-foreground">
                 Geen goede of foute antwoorden — bespreek vooral waarom je dit kaartje daar plaatst.
               </p>
