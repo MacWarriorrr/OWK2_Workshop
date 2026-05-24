@@ -88,6 +88,12 @@ function UitwerkingenPage() {
   async function handleDelete(id: string) {
     if (!window.confirm(language === 'nl' ? "Weet je zeker dat je deze uitwerking wilt verwijderen?" : "Are you sure you want to delete this result?")) return;
 
+    const password = window.prompt(language === 'nl' ? "Voer het wachtwoord in om te verwijderen:" : "Enter password to delete:");
+    if (password !== "OWK2") {
+      toast.error(language === 'nl' ? "Onjuist wachtwoord." : "Incorrect password.");
+      return;
+    }
+
     try {
       await deleteSubmission({ data: id });
       toast.success(language === 'nl' ? "Uitwerking succesvol verwijderd!" : "Result successfully deleted!");
