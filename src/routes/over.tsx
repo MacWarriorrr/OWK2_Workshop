@@ -30,7 +30,7 @@ function OverPage() {
         <p>
           {language === 'nl'
             ? 'Van Vijfeijken et al. (2023) identificeren twee hoofdrichtingen in differentiatie, voortkomend uit opvattingen over eerlijkheid (fairness): convergente en divergente differentiatie. Convergente differentiatie streeft naar gelijke uitkomsten voor alle leerlingen. Divergente differentiatie richt zich op het bieden van het meest passende leertraject per leerling, wat kan leiden tot uiteenlopende uitkomsten.'
-            : 'Van Vijfeijken and colleagues identified two main streams of differentiation based on these values: convergent and divergent differentiation. Convergent differentiation seeks to bring all students to an equal level of ability based on the value of equality in terms of equal output. Divergent differentiation seeks to supply each student with the most appropriate learning trajectory based on equity.'}
+            : 'Van Vijfeijken et al. (2023) identified two main streams of differentiation based on these values: convergent and divergent differentiation. Convergent differentiation seeks to bring all students to an equal level of ability based on the value of equality in terms of equal output. Divergent differentiation seeks to supply each student with the most appropriate learning trajectory based on equity.'}
         </p>
         <p>
           {language === 'nl'
