@@ -23,7 +23,7 @@ function Index() {
       <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_50%_at_50%_0%,oklch(0.93_0.04_230/.6),transparent)]" />
       <section className="mx-auto max-w-4xl px-6 pt-20 pb-10">
         <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-3 py-1 text-xs font-medium text-muted-foreground shadow-soft">
-          {language === 'nl' ? 'Aftercare bij de workshop' : 'Workshop aftercare'}
+          {language === 'nl' ? 'Digitaal vervolg van de workshop' : 'Digital continuation of the workshop'}
         </span>
         <h1 className="mt-5 font-display text-5xl font-semibold leading-[1.05] tracking-tight text-foreground sm:text-6xl">
           {language === 'nl' ? (
